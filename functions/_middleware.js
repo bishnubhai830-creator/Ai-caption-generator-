@@ -2,14 +2,20 @@ export async function onRequest(context) {
     const { request, next } = context;
     const url = new URL(request.url);
 
+    // Define redirect rules
     const redirectRules = [
         { from: '/', to: '/index.html', status: 200 },
         { from: '/generator', to: '/generator.html', status: 301 },
         { from: '/blog', to: '/blog.html', status: 301 },
-        { from: '/old-page', to: '/generator.html', status: 301 },
+        { from: '/about', to: '/about.html', status: 301 },
+        { from: '/contact', to: '/contact.html', status: 301 },
+        { from: '/pricing', to: '/pricing.html', status: 301 },
+        { from: '/privacy', to: '/privacy.html', status: 301 },
+        { from: '/top-10-free-ai-caption-generators', to: '/top-10-free-ai-caption-generators.html', status: 301 },
         { from: /^https:\/\/c0df4f92\.ai-caption-generator\.pages\.dev\/(.*)/, to: 'https://viralcap.ai/$1', status: 301 }
     ];
 
+    // Check redirect rules
     for (const rule of redirectRules) {
         if (typeof rule.from === 'string') {
             if (url.pathname === rule.from) {
@@ -24,13 +30,23 @@ export async function onRequest(context) {
         }
     }
 
-    if (!['/index.html', '/generator.html', '/blog.html'].includes(url.pathname)) {
-        const response = await fetch(new URL('/index.html', url.origin), request);
-        if (!response.ok) {
-            return new Response('Page Not Found', { status: 404 });
-        }
-        return response;
+    // Valid pages list
+    const validPages = [
+        '/index.html',
+        '/generator.html',
+        '/blog.html',
+        '/about.html',
+        '/contact.html',
+        '/pricing.html',
+        '/privacy.html',
+        '/top-10-free-ai-caption-generators.html'
+    ];
+
+    // If not a valid page, redirect to index.html
+    if (!validPages.includes(url.pathname)) {
+        return Response.redirect('/index.html', 301);
     }
 
+    // Proceed with the request
     return next();
 }
