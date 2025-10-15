@@ -1,4 +1,130 @@
-<script type="text/javascript">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Caption Generator: Create Viral Social Media Captions Instantly - ViralCap AI</title>
+    <meta name="description" content="Generate 5 free viral captions daily with our AI caption generator. Optimized for Instagram, TikTok, Twitter with SEO and trending phrases.">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <meta name="keywords" content="free AI caption generator, viral Instagram captions AI, best social media caption ideas 2025, SEO optimized TikTok captions">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f0f4ff, #e0e7ff); }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Inter', sans-serif; font-weight: 800; }
+        .navbar-gradient { background: linear-gradient(90deg, #3b82f6, #10b981); }
+        .caption-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .caption-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); }
+        .error-message { background: linear-gradient(135deg, #fee2e2, #fecaca); color: #991b1b; border: 1px solid #f87171; border-radius: 12px; padding: 20px; }
+        .loading-spinner { border: 5px solid #e5e7eb; border-top: 5px solid #3b82f6; border-radius: 50%; width: 48px; height: 48px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .gradient-btn { background: linear-gradient(90deg, #3b82f6, #10b981); }
+        .gradient-btn:hover { background: linear-gradient(90deg, #2563eb, #059669); }
+        .gradient-btn:disabled { background: #d1d5db; cursor: not-allowed; }
+        .pro-tip-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .pro-tip-card:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <nav class="navbar-gradient shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-white font-bold text-3xl tracking-tight">ViralCap AI</a>
+                    <div class="hidden md:ml-10 md:flex md:space-x-8">
+                        <a href="index.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="generator.html" class="text-white border-b-2 border-white px-3 py-2 text-sm font-medium">Generator</a>
+                        <a href="blog.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Blog</a>
+                        <a href="pricing.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Pricing</a>
+                        <a href="about.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">About</a>
+                        <a href="contact.html" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <span class="text-sm text-white font-medium" id="captionCounter">5/5 captions today</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid lg:grid-cols-4 gap-8">
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl p-8 shadow-xl sticky top-24">
+                    <h3 class="font-bold text-xl mb-6 text-gray-900">Pro Tips for Viral Content</h3>
+                    <div class="space-y-6">
+                        <div class="pro-tip-card bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-xl">
+                            <h4 class="font-semibold text-blue-700 mb-2">Trend Alert 2025</h4>
+                            <p class="text-sm text-gray-700">Use "Scene samjhe ya samjhau?" for viral meme vibes! 🚀</p>
+                        </div>
+                        <div class="pro-tip-card bg-gradient-to-br from-green-50 to-green-100 p-5 rounded-xl">
+                            <h4 class="font-semibold text-green-700 mb-2">Hashtag Strategy</h4>
+                            <p class="text-sm text-gray-700">Blend trending and niche hashtags for max reach. 📈</p>
+                        </div>
+                        <div class="pro-tip-card bg-gradient-to-br from-gray-50 to-gray-100 p-5 rounded-xl">
+                            <h4 class="font-semibold text-gray-800 mb-2">Engagement Boost</h4>
+                            <p class="text-sm text-gray-700">Ask questions to spark comments and interactions. 💬</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-gray-900 tracking-tight">Create Viral Captions with AI Magic</h1>
+                <p class="text-lg text-gray-600 mb-10">Generate 5 free, SEO-optimized captions daily for Instagram, TikTok, Twitter, and more. Share to unlock bonus captions! ✨</p>
+                
+                <div class="bg-white rounded-2xl p-8 shadow-xl mb-10">
+                    <form id="captionForm">
+                        <div class="grid md:grid-cols-2 gap-6 mb-8">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Describe Your Post</label>
+                                <input type="text" placeholder="e.g., funny cat meme, beach sunset motivational" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 bg-gray-50">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Platform</label>
+                                <select class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 bg-gray-50">
+                                    <option>Instagram</option>
+                                    <option>TikTok</option>
+                                    <option>Twitter</option>
+                                    <option>Facebook</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Tone</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <label class="flex items-center text-sm font-medium text-gray-700">
+                                    <input type="radio" name="tone" value="funny" class="mr-2 focus:ring-blue-500">
+                                    Funny 😄
+                                </label>
+                                <label class="flex items-center text-sm font-medium text-gray-700">
+                                    <input type="radio" name="tone" value="inspirational" class="mr-2 focus:ring-blue-500">
+                                    Inspirational 🌟
+                                </label>
+                                <label class="flex items-center text-sm font-medium text-gray-700">
+                                    <input type="radio" name="tone" value="witty" class="mr-2 focus:ring-blue-500">
+                                    Witty 🧠
+                                </label>
+                                <label class="flex items-center text-sm font-medium text-gray-700">
+                                    <input type="radio" name="tone" value="casual" class="mr-2 focus:ring-blue-500">
+                                    Casual 😎
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" id="generateBtn" class="w-full gradient-btn text-white py-4 rounded-lg font-bold text-lg transition duration-300 shadow-lg">
+                            Generate Viral Captions 🚀
+                        </button>
+                    </form>
+                </div>
+
+                <div id="captionsOutput" class="space-y-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
         var gk_isXlsx = false;
         var gk_xlsxFileLookup = {};
         var gk_fileData = {};
@@ -37,129 +163,7 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free AI Caption Generator: Create Viral Social Media Captions Instantly - ViralCap AI</title>
-    <meta name="description" content="Generate 5 free viral captions daily with our AI caption generator. Optimized for Instagram, TikTok, Twitter with SEO and trending phrases.">
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <meta name="keywords" content="free AI caption generator, viral Instagram captions AI, best social media caption ideas 2025, SEO optimized TikTok captions">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <style>
-        body { font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #f3f4f6, #e5e7eb); }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
-        .caption-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .caption-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 123, 255, 0.15); }
-        .error-message { background: linear-gradient(135deg, #f8d7da, #f5c6cb); color: #721c24; border: 1px solid #f5c6cb; border-radius: 8px; padding: 16px; }
-        .loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid #007BFF; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .gradient-btn { background: linear-gradient(90deg, #007BFF, #00FF7F); }
-        .gradient-btn:hover { background: linear-gradient(90deg, #0051a8, #00cc66); }
-        .gradient-btn:disabled { background: #d1d5db; cursor: not-allowed; }
-    </style>
-</head>
-<body class="bg-gray-50">
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-blue-600 font-bold text-2xl">ViralCap AI</span>
-                    <div class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="index.html" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium">Home</a>
-                        <a href="generator.html" class="text-blue-600 border-b-2 border-blue-600 px-3 py-2 text-sm font-medium">Generator</a>
-                        <a href="blog.html" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium">Blog</a>
-                        <a href="pricing.html" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium">Pricing</a>
-                        <a href="about.html" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium">About</a>
-                        <a href="contact.html" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium">Contact</a>
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-sm text-gray-600 mr-4" id="captionCounter">5/5 captions today</span>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid lg:grid-cols-4 gap-8">
-            <div class="lg:col-span-1">
-                <div class="bg-white rounded-xl p-6 shadow-lg sticky top-24">
-                    <h3 class="font-bold text-lg mb-4 text-blue-600">Pro Tips</h3>
-                    <div class="space-y-4">
-                        <div class="bg-blue-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-blue-600 mb-2">Trend Alert 2025</h4>
-                            <p class="text-sm text-gray-600">Use "Scene samjhe ya samjhau?" for viral meme vibes!</p>
-                        </div>
-                        <div class="bg-green-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-green-600 mb-2">Hashtag Strategy</h4>
-                            <p class="text-sm text-gray-600">Blend trending and niche hashtags for max reach.</p>
-                        </div>
-                        <div class="bg-gray-100 p-4 rounded-lg">
-                            <h4 class="font-semibold mb-2">Engagement Boost</h4>
-                            <p class="text-sm text-gray-600">Ask questions to spark comments and interactions.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-3">
-                <h1 class="text-3xl md:text-4xl font-bold mb-2 text-gray-800">Free AI Caption Generator: Create Viral Social Media Captions Instantly</h1>
-                <p class="text-gray-600 mb-8">Generate 5 free optimized captions daily. Share on social media for bonus captions!</p>
-                
-                <div class="bg-white rounded-xl p-6 shadow-lg mb-8">
-                    <form id="captionForm">
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Describe your post</label>
-                                <input type="text" placeholder="e.g., funny cat meme, beach sunset motivational" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Platform</label>
-                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <option>Instagram</option>
-                                    <option>TikTok</option>
-                                    <option>Twitter</option>
-                                    <option>Facebook</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Tone</label>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <label class="flex items-center">
-                                    <input type="radio" name="tone" value="funny" class="mr-2">
-                                    Funny
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="tone" value="inspirational" class="mr-2">
-                                    Inspirational
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="tone" value="witty" class="mr-2">
-                                    Witty
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="tone" value="casual" class="mr-2">
-                                    Casual
-                                </label>
-                            </div>
-                        </div>
-                        <button type="submit" id="generateBtn" class="w-full gradient-btn text-white py-4 rounded-lg font-bold text-lg transition duration-300">
-                            Generate Viral Captions
-                        </button>
-                    </form>
-                </div>
-
-                <div id="captionsOutput" class="space-y-4"></div>
-            </div>
-        </div>
-    </div>
-
-    <script>
         let captionsGenerated = 0;
         const maxCaptions = 5;
         let isGenerating = false;
@@ -188,7 +192,7 @@
             
             if (!prompt.trim()) {
                 const output = document.getElementById('captionsOutput');
-                output.innerHTML = '<div class="error-message text-center py-8">Bhai, describe your post to generate captions!</div>';
+                output.innerHTML = '<div class="error-message text-center py-8">Bhai, describe your post to generate captions! 😅</div>';
                 generateBtn.disabled = false;
                 isGenerating = false;
                 return;
@@ -214,7 +218,7 @@
 
         async function generateCaptions(prompt, platform, tone) {
             const output = document.getElementById('captionsOutput');
-            output.innerHTML = '<div class="text-center py-8"><div class="loading-spinner mx-auto"></div><p class="text-gray-600 mt-4">Bhai, thodi der... viral captions ban rahe hain!</p></div>';
+            output.innerHTML = '<div class="text-center py-8"><div class="loading-spinner mx-auto"></div><p class="text-gray-600 mt-4">Bhai, thodi der... viral captions ban rahe hain! 🚀</p></div>';
             
             const apiKey = 'AIzaSyDEckKpmuES31alvbsgAg-v4HDvPQvjl7Y';
             const language = detectLanguage(prompt);
@@ -266,7 +270,7 @@
                 createConfetti();
             } catch (error) {
                 console.error('Caption generation failed:', error);
-                output.innerHTML = `<div class="error-message text-center py-8">Bhai, kuch gadbad hui: ${error.message}. Try again ya new API key bana at https://aistudio.google.com/app/apikey!</div>`;
+                output.innerHTML = `<div class="error-message text-center py-8">Bhai, kuch gadbad hui: ${error.message}. Try again ya new API key bana at https://aistudio.google.com/app/apikey! 😓</div>`;
             }
         }
 
@@ -276,17 +280,17 @@
 
             captions.forEach((caption, index) => {
                 const card = document.createElement('div');
-                card.className = 'bg-white caption-card rounded-xl p-6 shadow-lg border border-blue-100';
+                card.className = 'bg-white caption-card rounded-2xl p-6 shadow-lg border border-gray-100';
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-4">
-                        <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm">Caption ${index + 1}</span>
-                        <button onclick="copyToClipboard('${caption.replace(/'/g, "\\'")}')" class="text-gray-600 hover:text-blue-600">
+                        <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-medium">Caption ${index + 1}</span>
+                        <button onclick="copyToClipboard('${caption.replace(/'/g, "\\'")}')" class="text-gray-600 hover:text-blue-600 transition duration-200">
                             <i data-feather="copy"></i>
                         </button>
                     </div>
-                    <p class="text-gray-800 mb-4 text-lg">${caption}</p>
+                    <p class="text-gray-800 mb-4 text-lg font-medium">${caption}</p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">#ViralCapAI</span>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">#ViralCapAI</span>
                     </div>
                 `;
                 output.appendChild(card);
@@ -300,7 +304,7 @@
                 alert('Caption copied to clipboard! 📋');
             }).catch(err => {
                 console.error('Copy failed:', err);
-                alert('Copy nahi hua, try again!');
+                alert('Copy nahi hua, try again! 😕');
             });
         }
 
