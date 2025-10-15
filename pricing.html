@@ -13,6 +13,15 @@
     <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <style>
+        .gradient-btn { background: linear-gradient(90deg, #007BFF, #00FF7F); }
+        .gradient-btn:hover { background: linear-gradient(90deg, #0051a8, #00cc66); }
+        .pricing-card { background: linear-gradient(135deg, #007BFF, #00FF7F); color: white; border-radius: 0.5rem; transition: all 0.3s ease; }
+        .pricing-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 123, 255, 0.5); }
+        .price-display { background: rgba(255, 255, 255, 0.9); color: #007BFF; padding: 1.5rem; border-radius: 0.5rem; display: block; margin: 0 auto 1rem; font-size: 2.5rem; font-weight: bold; }
+        .popular-label { background: transparent; color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 1.125rem; font-weight: bold; display: inline-block; text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
+    </style>
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
@@ -20,20 +29,19 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <span class="text-primary font-heading font-bold text-2xl">ViralCap AI</span>
-                    </div>
+                    <span class="text-primary font-bold text-2xl">ViralCap AI</span>
                     <div class="hidden md:ml-6 md:flex md:space-x-8">
-                        <a href="index.html" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
-                        <a href="generator.html" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">Generator</a>
-                        <a href="blog.html" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">Blog</a>
+                        <a href="index.html" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="generator.html" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Generator</a>
+                        <a href="blog.html" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Blog</a>
                         <a href="pricing.html" class="text-primary border-b-2 border-primary px-3 py-2 text-sm font-medium">Pricing</a>
-                        <a href="about.html" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">About</a>
-                        <a href="contact.html" class="text-gray-500 hover:text-primary px-3 py-2 text-sm font-medium">Contact</a>
+                        <a href="about.html" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">About</a>
+                        <a href="contact.html" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Contact</a>
+                        <a href="terms.html" class="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium">Terms</a>
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <a href="generator.html" class="bg-secondary hover:bg-green-400 text-white px-4 py-2 rounded-lg font-medium transition duration-300">
+                    <a href="generator.html" class="gradient-btn text-white px-4 py-2 rounded-lg font-medium transition duration-300">
                         Generate Now
                     </a>
                 </div>
@@ -43,101 +51,77 @@
 
     <!-- Pricing Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h1 class="text-3xl md:text-4xl font-heading font-bold text-center mb-4">Choose Your Viral Plan</h1>
-            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Whether you're a casual poster or a professional creator, we have the perfect plan for your caption needs</p>
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">Choose Your Viral Plan</h1>
+        <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Unlock the perfect plan for your social media success – from free daily captions to premium unlimited access.</p>
+        
+        <!-- Pricing Tiers -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <!-- Free Tier -->
+            <div class="pricing-card p-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">Free</h3>
+                <div class="price-display">$0<span class="text-xl font-normal">/month</span></div>
+                <p class="text-white mb-6 opacity-90">Ideal for casual users starting out</p>
+                <ul class="space-y-3 mb-8 text-left">
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>5 Captions Daily</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Basic AI Generation</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Standard Hashtags</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Copy to Clipboard</li>
+                </ul>
+                <button onclick="copyToClipboard('$0/month')" class="block w-full gradient-btn text-white py-3 rounded-lg font-medium hover:bg-opacity-90 transition duration-300">
+                    Get Started Free
+                </button>
+            </div>
             
-            <!-- Pricing Tiers -->
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- Free Tier -->
-                <div class="bg-white rounded-xl p-8 shadow-lg text-center">
-                    <h3 class="text-2xl font-heading font-semibold mb-4">Free</h3>
-                <div class="text-4xl font-bold mb-2">$0</div>
-                    <p class="text-gray-600 mb-6">Perfect for casual social media users</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-secondary mr-2 w-4 h-4"></i>
-                        5 Captions Daily
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-secondary mr-2 w-4 h-4"></i>
-                        Basic AI Generation
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-secondary mr-2 w-4 h-4"></i>
-                        Standard Hashtags
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-secondary mr-2 w-4 h-4"></i>
-                        Copy to Clipboard
-                        </li>
-                    </ul>
-                    <a href="generator.html" class="block w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-medium">
-                        Get Started Free
-                    </a>
-                </div>
-                
-                <!-- Pro Tier -->
-                <div class="bg-primary text-white rounded-xl p-8 shadow-2xl transform scale-105 text-center">
-                    <div class="bg-secondary text-white px-3 py-1 rounded-full text-sm inline-block mb-4">MOST POPULAR</div>
-                    <h3 class="text-2xl font-heading font-semibold mb-4">Pro</h3>
-                <div class="text-4xl font-bold mb-2">$4.99</div>
-                    <p class="opacity-90 mb-6">For serious creators and influencers</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-white mr-2 w-4 h-4"></i>
-                        Unlimited Captions
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-white mr-2 w-4 h-4"></i>
-                        Advanced AI Generation
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-white mr-2 w-4 h-4"></i>
-                        Premium Trending Phrases
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-white mr-2 w-4 h-4"></i>
-                        Priority Support
-                        </li>
-                    </ul>
-                    <a href="#" class="block w-full bg-secondary hover:bg-green-400 text-white py-3 rounded-lg font-medium transition duration-300">
-                        Upgrade Now
-                    </a>
-                </div>
-                
-                <!-- Enterprise Tier -->
-                <div class="bg-white rounded-xl p-8 shadow-lg text-center">
-                    <h3 class="text-2xl font-heading font-semibold mb-4">Enterprise</h3>
-                <div class="text-4xl font-bold mb-2">Custom</div>
-                    <p class="text-gray-600 mb-6">For agencies and large teams</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-secondary mr-2 w-4 h-4"></i>
-                        Everything in Pro
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-secondary mr-2 w-4 h-4"></i>
-                        Team Management
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-secondary mr-2 w-4 h-4"></i>
-                        API Access
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="text-secondary mr-2 w-4 h-4"></i>
-                        Custom AI Training
-                        </li>
-                    </ul>
-                    <a href="contact.html" class="block w-full bg-primary text-white py-3 rounded-lg font-medium">
-                        Contact Sales
-                    </a>
-                </div>
+            <!-- Pro Tier -->
+            <div class="pricing-card p-8 text-center">
+                <div class="popular-label mb-4">MOST POPULAR</div>
+                <h3 class="text-2xl font-bold mb-4">Pro</h3>
+                <div class="price-display">$4.99<span class="text-xl font-normal">/month</span></div>
+                <p class="text-white mb-6 opacity-90">Perfect for serious creators and influencers</p>
+                <ul class="space-y-3 mb-8 text-left">
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Unlimited Captions</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Advanced AI Generation</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Premium Trending Phrases</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Priority Support</li>
+                </ul>
+                <button onclick="copyToClipboard('$4.99/month')" class="block w-full gradient-btn text-white py-3 rounded-lg font-medium hover:bg-opacity-90 transition duration-300">
+                    Upgrade Now
+                </button>
+            </div>
+            
+            <!-- Enterprise Tier -->
+            <div class="pricing-card p-8 text-center">
+                <h3 class="text-2xl font-bold mb-4">Enterprise</h3>
+                <div class="price-display">Custom</div>
+                <p class="text-white mb-6 opacity-90">Tailored for agencies and large teams</p>
+                <ul class="space-y-3 mb-8 text-left">
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Everything in Pro</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Team Management</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>API Access</li>
+                    <li class="flex items-center"><i data-feather="check" class="text-white mr-2 w-4 h-4"></i>Custom AI Training</li>
+                </ul>
+                <button onclick="copyToClipboard('Custom')" class="block w-full gradient-btn text-white py-3 rounded-lg font-medium hover:bg-opacity-90 transition duration-300">
+                    Contact Sales
+                </button>
             </div>
         </div>
     </div>
 
     <script>
         feather.replace();
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Copied ' + text + ' to clipboard!');
+                }).catch(err => {
+                    alert('Failed to copy. Please manually copy: ' + text);
+                    console.error('Clipboard error:', err);
+                });
+            } else {
+                alert('Clipboard access blocked. Please manually copy: ' + text);
+            }
+        }
     </script>
 </body>
 </html>
