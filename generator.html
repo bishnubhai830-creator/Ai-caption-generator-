@@ -132,36 +132,28 @@
           return cell !== '' && cell != null;
         }
         function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
                 }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
             }
-        }
-        return gk_fileData[filename] || "";
+            return gk_fileData[filename] || "";
         }
 
         let captionsGenerated = 0;
@@ -198,7 +190,7 @@
                 return;
             }
             
-            await generateCaptions(prompt, platform, tone);
+            await generateWithRetry(prompt, platform, tone);
             captionsGenerated++;
             localStorage.setItem('captionsGenerated', captionsGenerated.toString());
             updateCounter();
@@ -216,11 +208,27 @@
             return 'english';
         }
 
+        async function generateWithRetry(prompt, platform, tone, maxRetries = 3) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    return await generateCaptions(prompt, platform, tone);
+                } catch (error) {
+                    if ((error.message.includes('429') || error.message.includes('503')) && i < maxRetries - 1) {
+                        const waitTime = Math.pow(2, i) * 1000; // 1s, 2s, 4s
+                        console.log(`Retry ${i+1} after ${waitTime}ms due to error...`);
+                        await new Promise(resolve => setTimeout(resolve, waitTime));
+                        continue;
+                    }
+                    throw error;
+                }
+            }
+        }
+
         async function generateCaptions(prompt, platform, tone) {
             const output = document.getElementById('captionsOutput');
             output.innerHTML = '<div class="text-center py-8"><div class="loading-spinner mx-auto"></div><p class="text-gray-600 mt-4">Bhai, thodi der... viral captions ban rahe hain! 🚀</p></div>';
             
-            const apiKey = 'AIzaSyDEckKpmuES31alvbsgAg-v4HDvPQvjl7Y';
+            const apiKey = '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';
             const language = detectLanguage(prompt);
             let languageInstruction = '';
             
@@ -234,18 +242,30 @@
 
             try {
                 console.log(`Sending API request for prompt: "${prompt}", platform: ${platform}, tone: ${tone}, language: ${language}`);
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+                const url = 'https://api.openai.com/v1/chat/completions';
                 const data = {
-                    contents: [{
-                        parts: [{
-                            text: `${languageInstruction} Generate 5 natural, engaging, and viral-potential captions for a ${platform} post about "${prompt}" in a ${tone} tone. Analyze the description for key themes (e.g., "Chashma" for eyewear/glasses stories, "Tales" for narratives, "HatTrick" for achievements/sports wins, "Hub" for community/content hub) and incorporate relevant SEO keywords and trending terms for 2025 (e.g., #EyewearTrends, #AchievementVibes, #StoryHub, meme culture for TikTok, storytelling for Instagram, concise wit for Twitter, community focus for Facebook). Start with a catchy hook, keep captions short (under 150 chars for Twitter, crisp for others), use 1-2 emojis, include a question or CTA for engagement, ensure authenticity, and add 3-5 SEO-optimized hashtags including #ViralCapAI. Avoid copying the input. Format as a numbered list.`
-                        }]
-                    }]
+                    model: 'gpt-3.5-turbo',
+                    messages: [
+                        {
+                            role: 'system',
+                            content: 'You are a creative social media assistant specializing in viral content.'
+                        },
+                        {
+                            role: 'user',
+                            content: `${languageInstruction} Generate 5 natural, engaging, and viral-potential captions for a ${platform} post about "${prompt}" in a ${tone} tone. Analyze the description for key themes (e.g., "Chashma" for eyewear/glasses stories, "Tales" for narratives, "HatTrick" for achievements/sports wins, "Hub" for community/content hub) and incorporate relevant SEO keywords and trending terms for 2025 (e.g., #EyewearTrends, #AchievementVibes, #StoryHub, meme culture for TikTok, storytelling for Instagram, concise wit for Twitter, community focus for Facebook). Start with a catchy hook, keep captions short (under 150 chars for Twitter, crisp for others), use 1-2 emojis, include a question or CTA for engagement, ensure authenticity, and add 3-5 SEO-optimized hashtags including #ViralCapAI. Avoid copying the input. Format as a numbered list.`
+                        }
+                    ],
+                    max_tokens: 500,
+                    temperature: 0.7,
+                    top_p: 0.9
                 };
 
                 const response = await fetch(url, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
                     body: JSON.stringify(data)
                 });
 
@@ -255,11 +275,11 @@
                 }
 
                 const result = await response.json();
-                if (!result.candidates || !result.candidates[0]?.content?.parts?.[0]?.text) {
+                if (!result.choices || !result.choices[0]?.message?.content) {
                     throw new Error('Invalid API response: No valid captions returned');
                 }
 
-                const generatedText = result.candidates[0].content.parts[0].text;
+                const generatedText = result.choices[0].message.content;
                 const captions = generatedText.split('\n').filter(line => line.trim()).map(line => line.replace(/^\d+\.\s*/, ''));
 
                 if (captions.length === 0) {
@@ -270,7 +290,7 @@
                 createConfetti();
             } catch (error) {
                 console.error('Caption generation failed:', error);
-                output.innerHTML = `<div class="error-message text-center py-8">Bhai, kuch gadbad hui: ${error.message}. Try again ya new API key bana at https://aistudio.google.com/app/apikey! 😓</div>`;
+                output.innerHTML = `<div class="error-message text-center py-8">Bhai, abhi bhi issue: ${error.message}. Apna Open AI API key check kar ya naya bana at https://platform.openai.com/api-keys! 😓<br><small>Tip: Retry button dabao, auto fix ho jaayega.</small></div>`;
             }
         }
 
