@@ -1,10 +1,13 @@
-/index.html 200
-/generator.html 200
-/blog.html 200
-/about.html 200
-/contact.html 200
-/pricing.html 200
-/privacy.html 200
-/terms.html 200
-/top-10-free-ai-caption-generators.html 200
-/* /index.html 301
+# Pretty URLs -> map to actual html files, respond with 200 (serve the file)
+/pricing        /pricing.html        200
+/generator      /generator.html      200
+/blog           /blog.html           200
+/about          /about.html          200
+/contact        /contact.html        200
+/privacy        /privacy.html        200
+/terms          /terms.html          200
+/top-10-free-ai-caption-generators /top-10-free-ai-caption-generators.html 200
+
+# SPA fallback: if someone visits an unknown path, serve index.html (useful if you rely on client-side routing)
+# Keep this as the last rule
+/*              /index.html          200
