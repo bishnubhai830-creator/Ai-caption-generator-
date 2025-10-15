@@ -1,20 +1,15 @@
-# Serve each HTML file correctly (no redirect loops)
-/index.html               /index.html              200
-/pricing.html             /pricing.html            200
-/generator.html           /generator.html          200
-/blog.html                /blog.html               200
-/terms.html               /terms.html              200
-/privacy.html             /privacy.html            200
-/contact.html             /contact.html            200
-/about.html               /about.html              200
-/top-10-free-ai-caption-generators.html  /top-10-free-ai-caption-generators.html 200
+# Correctly serve each HTML file (no redirect loops)
+#index.html 200  <-- remove or comment this
 
-# Optional pretty URLs (not required, but nice)
-#/pricing                 /pricing.html            200
-#/generator               /generator.html          200
-#/blog                    /blog.html               200
-#/terms                   /terms.html              200
+# Pretty URL redirects (no infinite loop, use 200 instead of 301)
+/generator /generator.html 200
+/blog /blog.html 200
+/about /about.html 200
+/contact /contact.html 200
+/pricing /pricing.html 200
+/privacy /privacy.html 200
+/terms /terms.html 200
+/top-10-free-ai-caption-generators /top-10-free-ai-caption-generators.html 200
 
-# DO NOT use 301 or 404 for SPA fallback if you don’t have an SPA
-# Comment out the following line if you had it before:
+# Fallback for single-page apps (comment out if not needed)
 # /* /index.html 200
